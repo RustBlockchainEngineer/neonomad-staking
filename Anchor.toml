@@ -1,0 +1,21 @@
+[programs.localnet]
+cropper_staking = "sHXvR2kTZyfGsqw4LaLfDn4bc9kb3ADgWicQTY4AuUM"
+
+[programs.devnet]
+cropper_staking = "3cjoBZpiEe49TiFcyvPVBTmR5GxiYzpGmw2HyJyszphw"
+
+[programs.testnet]
+cropper_staking = "3cjoBZpiEe49TiFcyvPVBTmR5GxiYzpGmw2HyJyszphw"
+
+[programs.mainnet]
+cropper_staking = "FBHjXGXUa65hSCzyfMhkcLzu2U3HByNqcWMuDUUHURLa"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "mocha -t 1000000 tests/"

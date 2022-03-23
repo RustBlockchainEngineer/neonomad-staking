@@ -1,0 +1,73 @@
+{
+    "dependencies": {
+        "@project-serum/anchor": "^0.16.1",
+        "@project-serum/common": "^0.0.1-beta.3",
+        "@project-serum/serum": "^0.13.59",
+        "@solana/spl-token": "^0.1.8",
+        "@solana/web3.js": "^1.28.0",
+        "csvtojson": "^2.0.10",
+        "lodash": "^4.17.21"
+    },
+    "devDependencies": {
+        "chai": "^4.3.4",
+        "mocha": "^9.0.3"
+    },
+    "scripts": {
+        "test": "anchor test --provider.cluster localnet --provider.wallet ~/.config/solana/id.json",
+
+        "deploy:farm:dev": "anchor deploy --program-name cropper_staking --provider.cluster https://api.devnet.solana.com --provider.wallet ~/.config/solana/id.json",
+        "deploy:farm:main": "anchor deploy --program-name cropper_staking --provider.cluster https://api.mainnet-beta.solana.com --provider.wallet ~/.config/solana/waggle.json",
+
+        "farm:upgrade:dev": "anchor upgrade --program-id 2PB1GQHQTQtj6WgPTjNnmVc6r8WP9EUQw4SoniABCp1v './target/deploy/cropper_staking.so' --provider.cluster https://api.devnet.solana.com --provider.wallet ~/.config/solana/id.json",
+
+
+        "fetchPool:dev": "env-cmd -e dev node migrations/fetch_pool.js",
+
+        "createAmountConfig:dev": "env-cmd -e dev node migrations/create_amount_config.js",
+        "changeAmountConfig:dev": "env-cmd -e dev node migrations/change_amount_config.js",
+        "closeAmountConfig:dev": "env-cmd -e dev node migrations/close_amount_config.js",
+        "createPool:dev": "env-cmd -e dev node migrations/create_pool.js",
+        "createMint:dev": "env-cmd -e dev node migrations/create_mint.js",
+        "createPoolTier:dev": "env-cmd -e dev node migrations/create_pool_tier_config.js",
+        "changePoolSetting:dev": "env-cmd -e dev node migrations/change_pool_setting.js",
+        "fundToken:dev": "env-cmd -e dev node migrations/fund_token.js",
+        "fundToken:dev-sell": "env-cmd -e dev-sell node migrations/fund_token.js",
+        "createWhitelist:dev": "env-cmd -e dev node migrations/create_whitelist.js",
+        "closeWhitelist:dev": "env-cmd -e dev node migrations/close_all_whitelist.js",
+        "createVestingSchedule:dev": "env-cmd -e dev node migrations/create_vesting_schedule.js",
+        "withdrawFund:dev": "env-cmd -e dev node migrations/withdraw_fund.js",
+
+        "createAmountConfig:main": "env-cmd -e main node migrations/create_amount_config.js",
+        "changeAmountConfig:main": "env-cmd -e main node migrations/change_amount_config.js",
+        "closeAmountConfig:main": "env-cmd -e main node migrations/close_amount_config.js",
+        "createPool:main": "env-cmd -e main node migrations/create_pool.js",
+        "createMint:main": "env-cmd -e main node migrations/create_mint.js",
+        "changePoolSetting:main": "env-cmd -e main node migrations/change_pool_setting.js",
+        "fundToken:main": "env-cmd -e main node migrations/fund_token.js",
+        "fundToken:main-sell": "env-cmd -e main-sell node migrations/fund_token.js",
+        "createWhitelist:main": "env-cmd -e main node migrations/create_whitelist.js",
+        "closeWhitelist:main": "env-cmd -e main node migrations/close_all_whitelist.js",
+        "createVestingSchedule:main": "env-cmd -e main node migrations/create_vesting_schedule.js",
+        "withdrawFund:main": "env-cmd -e main node migrations/withdraw_fund.js",
+
+        "farm:createState:dev": "env-cmd -e dev node farm_scripts/create_state.js",
+        "farm:createRewardConfig:dev": "env-cmd -e dev node farm_scripts/create_reward_config.js",
+        "farm:setRewardConfig:dev": "env-cmd -e dev node farm_scripts/set_reward_config.js",
+        "farm:changeFarmRate:dev": "env-cmd -e dev node farm_scripts/change_farm_rate.js",
+        "farm:createPool:dev": "env-cmd -e dev node farm_scripts/create_pool.js",
+        "farm:changePoolPoint:dev": "env-cmd -e dev node farm_scripts/change_pool_point.js",
+        "farm:changePoolMultipler:dev": "env-cmd -e dev node farm_scripts/change_pool_multipler.js",
+        "farm:fundReward:dev": "env-cmd -e dev node farm_scripts/fund_reward.js",
+        "farm:allUsers:dev": "env-cmd -e dev node farm_scripts/fetch_all_users.js",
+
+        "farm:createState:main": "env-cmd -e main node farm_scripts/create_state.js",
+        "farm:createRewardConfig:main": "env-cmd -e main node farm_scripts/create_reward_config.js",
+        "farm:setRewardConfig:main": "env-cmd -e main node farm_scripts/set_reward_config.js",
+        "farm:changeFarmRate:main": "env-cmd -e main node farm_scripts/change_farm_rate.js",
+        "farm:createPool:main": "env-cmd -e main node farm_scripts/create_pool.js",
+        "farm:changePoolPoint:main": "env-cmd -e main node farm_scripts/change_pool_point.js",
+        "farm:changePoolMultipler:main": "env-cmd -e main node farm_scripts/change_pool_multipler.js",
+        "farm:fundReward:main": "env-cmd -e main node farm_scripts/fund_reward.js",
+        "farm:allUsers:main": "env-cmd -e main node farm_scripts/fetch_all_users.js"
+    }
+}
