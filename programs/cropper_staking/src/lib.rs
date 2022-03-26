@@ -4,7 +4,7 @@ use std::convert::TryFrom;
 use std::convert::TryInto;
 use std::mem::size_of;
 
-declare_id!("FBHjXGXUa65hSCzyfMhkcLzu2U3HByNqcWMuDUUHURLa");
+declare_id!("FZQaLLdvkgUrJkzuANZULPYhaf4Ej7uTFR2QHKuKYYuC");
 
 const FULL_100: u64 = 100_000_000_000;
 const ACC_PRECISION: u128 = 100_000_000_000;
@@ -52,6 +52,10 @@ pub mod cropper_staking {
     }
 
     pub fn fund_reward_token(_ctx: Context<Fund>, amount: u64) -> ProgramResult {
+        msg!("funding...");
+        let state = _ctx.accounts.state.load()?;
+        let mut pool = _ctx.accounts.pool.load_mut()?;
+        msg!("loaded state, pool");
         let cpi_accounts = Transfer {
             from: _ctx.accounts.user_vault.to_account_info(),
             to: _ctx.accounts.reward_vault.to_account_info(),
@@ -60,6 +64,11 @@ pub mod cropper_staking {
         let cpi_program = _ctx.accounts.token_program.to_account_info();
         let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
         token::transfer(cpi_ctx, amount)?;
+        msg!("funded {}", amount);
+
+        pool.amount += amount;
+        pool.update(&state, &_ctx.accounts.clock)?;
+        msg!("updated pool");
         Ok(())
     }
 
@@ -204,28 +213,32 @@ pub mod cropper_staking {
     }
 
     pub fn stake(_ctx: Context<Stake>, amount: u64, lock_duration: i64) -> ProgramResult {
+        msg!("staking...");
         let state = _ctx.accounts.state.load()?;
         let extra_account = &mut _ctx.accounts.extra_reward_account;
         let mut user = _ctx.accounts.user.load_mut()?;
         let mut pool = _ctx.accounts.pool.load_mut()?;
-
+        msg!("loaded states");
         extra_account.validate_lock_duration(&lock_duration)?;
+        msg!("passed validate_lock_duration");
         require!(
             lock_duration >= user.lock_duration,
             ErrorCode::InvalidLockDuration
         );
+        msg!("passed lock_duration >= user.lock_duration");
 
         pool.update(&state, &_ctx.accounts.clock)?;
+        msg!("updated state");
         let user_lock_duration = user.lock_duration;
         user.calculate_reward_amount(&pool, &extra_account.get_extra_reward_percentage(&user_lock_duration))?;
-
+        msg!("calculate_reward_amount");
         user.amount = user.amount.checked_add(amount).unwrap();
         pool.amount = pool.amount.checked_add(amount).unwrap();
 
         user.lock_duration = lock_duration;
         user.calculate_reward_debt(&pool)?;
         user.last_stake_time = _ctx.accounts.clock.unix_timestamp;
-
+        msg!("calculate_reward_debt");
         let cpi_accounts = Transfer {
             from: _ctx.accounts.user_vault.to_account_info(),
             to: _ctx.accounts.pool_vault.to_account_info(),
@@ -234,6 +247,7 @@ pub mod cropper_staking {
         let cpi_program = _ctx.accounts.token_program.to_account_info();
         let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
         token::transfer(cpi_ctx, amount)?;
+        msg!("staked {}", amount);
         emit!(UserStaked {
             pool: _ctx.accounts.pool.key(),
             user: _ctx.accounts.user.key(),
@@ -358,6 +372,8 @@ pub struct CreateState<'info> {
 pub struct Fund<'info> {
     #[account(seeds = [b"state".as_ref()], bump = state.load()?.bump)]
     pub state: Loader<'info, StateAccount>,
+    #[account(mut, seeds = [pool.load()?.mint.key().as_ref()], bump = pool.load()?.bump, has_one = authority)]
+    pub pool: Loader<'info, FarmPoolAccount>,
     pub authority: Signer<'info>,
     #[account(mut, constraint = reward_vault.owner == state.key())]
     pub reward_vault: Box<Account<'info, TokenAccount>>,
@@ -365,6 +381,7 @@ pub struct Fund<'info> {
     pub user_vault: Box<Account<'info, TokenAccount>>,
     #[account(constraint = token_program.key == &token::ID)]
     pub token_program: Program<'info, Token>,
+    pub clock: Sysvar<'info, Clock>,
 }
 
 #[derive(Accounts)]
@@ -682,10 +699,10 @@ impl FarmPoolUserAccount {
     }
     fn calculate_reward_debt<'info>(&mut self, pool: &FarmPoolAccount) -> Result<()> {
 
-        msg!("amount {}", self.amount);
-        msg!("acc_per_share {}", pool.acc_reward_per_share);
-        msg!("multiplied {}", u128::from(self.amount).checked_mul(pool.acc_reward_per_share).unwrap());
-        msg!("scaled {}", u128::from(self.amount).checked_mul(pool.acc_reward_per_share).unwrap().checked_div(ACC_PRECISION).unwrap());
+        // msg!("amount {}", self.amount);
+        // msg!("acc_per_share {}", pool.acc_reward_per_share);
+        // msg!("multiplied {}", u128::from(self.amount).checked_mul(pool.acc_reward_per_share).unwrap());
+        // msg!("scaled {}", u128::from(self.amount).checked_mul(pool.acc_reward_per_share).unwrap().checked_div(ACC_PRECISION).unwrap());
 
         self.reward_debt = u128::from(self.amount)
             .checked_mul(pool.acc_reward_per_share)
