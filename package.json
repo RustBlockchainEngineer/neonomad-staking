@@ -1,6 +1,7 @@
 {
     "dependencies": {
-        "@project-serum/anchor": "^0.16.1",
+        "@project-serum/anchor": "^0.16.2",
+        "@project-serum/anchor-cli": "^0.16.2",
         "@project-serum/common": "^0.0.1-beta.3",
         "@project-serum/serum": "^0.13.59",
         "@solana/spl-token": "^0.1.8",
@@ -22,7 +23,6 @@
         "staking:changePoolMultipler:dev": "env-cmd -e dev node staking_scripts/change_pool_multipler.js",
         "staking:fundReward:dev": "env-cmd -e dev node staking_scripts/fund_reward.js",
         "staking:allUsers:dev": "env-cmd -e dev node staking_scripts/fetch_all_users.js",
-
         "staking:createState:main": "env-cmd -e main node staking_scripts/create_state.js",
         "staking:createRewardConfig:main": "env-cmd -e main node staking_scripts/create_reward_config.js",
         "staking:setRewardConfig:main": "env-cmd -e main node staking_scripts/set_reward_config.js",

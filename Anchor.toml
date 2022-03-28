@@ -2,7 +2,7 @@
 cropper_staking = "3LENVKyJfTQeh6U714NQKYvqEibjqZLPZYfprZsAoCUS"
 
 [programs.devnet]
-cropper_staking = "3LENVKyJfTQeh6U714NQKYvqEibjqZLPZYfprZsAoCUS"
+cropper_staking = "94fsNRJx5pcXxcmWXW2RR3bHbT7SAmhfdZGxm4GLwC1"
 
 [programs.testnet]
 cropper_staking = "3cjoBZpiEe49TiFcyvPVBTmR5GxiYzpGmw2HyJyszphw"
