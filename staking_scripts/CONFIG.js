@@ -19,7 +19,7 @@ anchor.setProvider(provider);
 const MAIN_POOL_CONFIG = {
   PROGRAM_ID: new PublicKey('3LENVKyJfTQeh6U714NQKYvqEibjqZLPZYfprZsAoCUS'),
   REWARD_TOKEN_ID: new PublicKey('JBBdiDDL2uGHkYxJQEbtBo1uY5VErjwRJNVeCHipgEJA'),
-  FUND_TOKEN_VAULT: new PublicKey('8An73xfHatDuRknJ9UPadMAymRpkhQHiV8Safkh71UEx'),
+  FUND_TOKEN_VAULT: new PublicKey('B77SLtFLwAQDMHDLg6JS5k3RmEiJcuhajeF66LZVEy6K'),
   POOL_POINT: new BN('0'),
   POOL_AMOUNT_MULTIPLIER: new BN('1'),
   STAKING_RATE: new BN(0.10 * 1_000_000),
