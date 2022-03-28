@@ -17,7 +17,7 @@ async function main () {
       pool: await utils.getPoolSigner(),
       state: stateAccount.publicKey,
       rewardVault: stateAccount.rewardVault,
-      userVault: await utils.getAssociatedTokenAddress(STAKING_CONFIG.REWARD_TOKEN_ID, provider.wallet.publicKey),
+      userVault: STAKING_CONFIG.FUND_TOKEN_VAULT,
       authority: provider.wallet.publicKey,
       tokenProgram: TOKEN_PROGRAM_ID,
       clock: anchor.web3.SYSVAR_CLOCK_PUBKEY,
