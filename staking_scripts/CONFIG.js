@@ -21,7 +21,7 @@ const MAIN_POOL_CONFIG = {
   REWARD_TOKEN_ID: new PublicKey('JBBdiDDL2uGHkYxJQEbtBo1uY5VErjwRJNVeCHipgEJA'),
   POOL_POINT: new BN('0'),
   POOL_AMOUNT_MULTIPLIER: new BN('1'),
-  STAKING_RATE: getNumber(0.10), // 3_000_000 token per years
+  STAKING_RATE: 0.10 * 1_000_000
   REWARD_CONFIGS: [
     { duration: new BN(1 * 30 * 24 * 60 * 60), extraPercentage: getNumber(0) },
     { duration: new BN(3 * 30 * 24 * 60 * 60), extraPercentage: getNumber(10) },
