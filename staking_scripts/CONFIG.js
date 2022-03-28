@@ -17,16 +17,16 @@ const provider = new anchor.Provider(connection, wallet, {
 anchor.setProvider(provider);
 
 const MAIN_POOL_CONFIG = {
-  PROGRAM_ID: new PublicKey('2PB1GQHQTQtj6WgPTjNnmVc6r8WP9EUQw4SoniABCp1v'),
-  REWARD_TOKEN_ID: new PublicKey('5tN42n9vMi6ubp67Uy4NnmM5DMZYN8aS8GeB3bEDHr6E'),
+  PROGRAM_ID: new PublicKey('3LENVKyJfTQeh6U714NQKYvqEibjqZLPZYfprZsAoCUS'),
+  REWARD_TOKEN_ID: new PublicKey('JBBdiDDL2uGHkYxJQEbtBo1uY5VErjwRJNVeCHipgEJA'),
   POOL_POINT: new BN('0'),
   POOL_AMOUNT_MULTIPLIER: new BN('1'),
-  STAKING_RATE: getNumber(0.01), // 3_000_000 token per years
+  STAKING_RATE: getNumber(0.10), // 3_000_000 token per years
   REWARD_CONFIGS: [
     { duration: new BN(1 * 30 * 24 * 60 * 60), extraPercentage: getNumber(0) },
     { duration: new BN(3 * 30 * 24 * 60 * 60), extraPercentage: getNumber(10) },
-    { duration: new BN(6 * 30 * 24 * 60 * 60), extraPercentage: getNumber(30) },
-    { duration: new BN(365 * 24 * 60 * 60), extraPercentage: getNumber(100) },
+   // { duration: new BN(6 * 30 * 24 * 60 * 60), extraPercentage: getNumber(30) },
+   // { duration: new BN(365 * 24 * 60 * 60), extraPercentage: getNumber(100) },
   ]
 }
 
