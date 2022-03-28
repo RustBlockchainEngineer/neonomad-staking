@@ -12,7 +12,7 @@ const { program, provider } = ENV_CONFIG
 
 async function main () {
   let pools = await program.account.farmPoolAccount.all()
-  await program.rpc.changeTokensPerSecond(STAKING_CONFIG.FARM_RATE, {
+  await program.rpc.changeTokensPerSecond(STAKING_CONFIG.STAKING_RATE, {
     accounts: {
       state: await utils.getStateSigner(),
       authority: provider.wallet.publicKey,

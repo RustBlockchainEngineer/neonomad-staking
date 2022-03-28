@@ -22,8 +22,8 @@ const MAIN_POOL_CONFIG = {
   FUND_TOKEN_VAULT: new PublicKey('8An73xfHatDuRknJ9UPadMAymRpkhQHiV8Safkh71UEx'),
   POOL_POINT: new BN('0'),
   POOL_AMOUNT_MULTIPLIER: new BN('1'),
-  STAKING_RATE: 0.10 * 1_000_000,
-  FUND_AMOUNT: 1000000 * 1_000_000, // 1000 NNI token
+  STAKING_RATE: new BN(0.10 * 1_000_000),
+  FUND_AMOUNT: new BN(1000000 * 1_000_000), // 1000 NNI token
   REWARD_CONFIGS: [
     { duration: new BN(1 * 30 * 24 * 60 * 60), extraPercentage: getNumber(0) },
     { duration: new BN(3 * 30 * 24 * 60 * 60), extraPercentage: getNumber(10) },
