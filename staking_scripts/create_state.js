@@ -17,7 +17,7 @@ async function main () {
     program.programId
   );
   const stateRewardVault = await rewardToken.createAccount(stateSigner)
-  await program.rpc.createState(stateBump, STAKING_CONFIG.FARM_RATE, {
+  await program.rpc.createState(stateBump, STAKING_CONFIG.STAKING_RATE, {
     accounts: {
       state: stateSigner,
       rewardMint: rewardToken.publicKey,
