@@ -12,7 +12,7 @@ const { program, provider } = ENV_CONFIG
 
 async function main () {
   const stateAccount = await utils.getStateAccount()
-  await program.rpc.fundRewardToken(utils.getNumber(5000), {
+  await program.rpc.fundRewardToken(STAKING_CONFIG.FUND_AMOUNT, {
     accounts: {
       pool: await utils.getPoolSigner(),
       state: stateAccount.publicKey,
