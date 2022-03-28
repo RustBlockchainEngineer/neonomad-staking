@@ -4,7 +4,7 @@ use std::convert::TryFrom;
 use std::convert::TryInto;
 use std::mem::size_of;
 
-declare_id!("FZQaLLdvkgUrJkzuANZULPYhaf4Ej7uTFR2QHKuKYYuC");
+declare_id!("3LENVKyJfTQeh6U714NQKYvqEibjqZLPZYfprZsAoCUS");
 
 const FULL_100: u64 = 100_000_000_000;
 const ACC_PRECISION: u128 = 100_000_000_000;
@@ -53,7 +53,7 @@ pub mod cropper_staking {
 
     pub fn fund_reward_token(_ctx: Context<Fund>, amount: u64) -> ProgramResult {
         msg!("funding...");
-        let state = _ctx.accounts.state.load()?;
+        let mut state = _ctx.accounts.state.load_mut()?;
         let mut pool = _ctx.accounts.pool.load_mut()?;
         msg!("loaded state, pool");
         let cpi_accounts = Transfer {
@@ -66,7 +66,14 @@ pub mod cropper_staking {
         token::transfer(cpi_ctx, amount)?;
         msg!("funded {}", amount);
 
-        pool.amount += amount;
+        state.total_point = state
+            .total_point
+            .checked_add(amount)
+            .unwrap();
+        pool.point = pool
+            .point
+            .checked_add(amount)
+            .unwrap();
         pool.update(&state, &_ctx.accounts.clock)?;
         msg!("updated pool");
         Ok(())
@@ -370,10 +377,10 @@ pub struct CreateState<'info> {
 
 #[derive(Accounts)]
 pub struct Fund<'info> {
-    #[account(seeds = [b"state".as_ref()], bump = state.load()?.bump)]
-    pub state: Loader<'info, StateAccount>,
-    #[account(mut, seeds = [pool.load()?.mint.key().as_ref()], bump = pool.load()?.bump, has_one = authority)]
+    #[account(mut, seeds = [pool.load()?.mint.key().as_ref()], bump = pool.load()?.bump)]
     pub pool: Loader<'info, FarmPoolAccount>,
+    #[account(mut, seeds = [b"state".as_ref()], bump = state.load()?.bump)]
+    pub state: Loader<'info, StateAccount>,
     pub authority: Signer<'info>,
     #[account(mut, constraint = reward_vault.owner == state.key())]
     pub reward_vault: Box<Account<'info, TokenAccount>>,

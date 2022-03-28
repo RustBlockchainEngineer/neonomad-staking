@@ -16,46 +16,24 @@ const provider = new anchor.Provider(connection, wallet, {
 
 anchor.setProvider(provider);
 
-const DEV_POOL_CONFIG = {
-  PROGRAM_ID: new PublicKey('2PB1GQHQTQtj6WgPTjNnmVc6r8WP9EUQw4SoniABCp1v'),
-  REWARD_TOKEN_ID: new PublicKey('21sXd6E1shHL1meTE6drNQi8aAeJ95sQuLZzUXrzdn7o'),
-  POOL_POINT: new BN('1000'),
-  POOL_AMOUNT_MULTIPLIER: new BN('1'),
-  FARM_RATE: getNumber(0.095), // 3_000_000 token per years
-  REWARD_CONFIGS: [
-    { duration: new BN(1 * 30 * 24 * 60 * 60), extraPercentage: getNumber(0) },
-    { duration: new BN(3 * 30 * 24 * 60 * 60), extraPercentage: getNumber(10) },
-    { duration: new BN(6 * 30 * 24 * 60 * 60), extraPercentage: getNumber(30) },
-    { duration: new BN(365 * 24 * 60 * 60), extraPercentage: getNumber(100) },
-    // { duration: new BN(0), extraPercentage: getNumber(0) },
-    // { duration: new BN(60), extraPercentage: getNumber(25) },
-    // { duration: new BN(120), extraPercentage: getNumber(50) },
-    // { duration: new BN(180), extraPercentage: getNumber(100) },
-  ]
-}
-
 const MAIN_POOL_CONFIG = {
   PROGRAM_ID: new PublicKey('2PB1GQHQTQtj6WgPTjNnmVc6r8WP9EUQw4SoniABCp1v'),
   REWARD_TOKEN_ID: new PublicKey('5tN42n9vMi6ubp67Uy4NnmM5DMZYN8aS8GeB3bEDHr6E'),
-  POOL_POINT: new BN('1000'),
+  POOL_POINT: new BN('0'),
   POOL_AMOUNT_MULTIPLIER: new BN('1'),
-  FARM_RATE: getNumber(0.01), // 3_000_000 token per years
+  STAKING_RATE: getNumber(0.01), // 3_000_000 token per years
   REWARD_CONFIGS: [
     { duration: new BN(1 * 30 * 24 * 60 * 60), extraPercentage: getNumber(0) },
     { duration: new BN(3 * 30 * 24 * 60 * 60), extraPercentage: getNumber(10) },
     { duration: new BN(6 * 30 * 24 * 60 * 60), extraPercentage: getNumber(30) },
     { duration: new BN(365 * 24 * 60 * 60), extraPercentage: getNumber(100) },
-    // { duration: new BN(0), extraPercentage: getNumber(0) },
-    // { duration: new BN(60), extraPercentage: getNumber(25) },
-    // { duration: new BN(120), extraPercentage: getNumber(50) },
-    // { duration: new BN(180), extraPercentage: getNumber(100) },
   ]
 }
 
-const FARM_CONFIG = MAIN_POOL_CONFIG
+const STAKING_CONFIG = MAIN_POOL_CONFIG
 
-const program = new anchor.Program(idl, FARM_CONFIG.PROGRAM_ID);
-const rewardToken = new Token(connection, FARM_CONFIG.REWARD_TOKEN_ID, TOKEN_PROGRAM_ID, wallet.payer)
+const program = new anchor.Program(idl, STAKING_CONFIG.PROGRAM_ID);
+const rewardToken = new Token(connection, STAKING_CONFIG.REWARD_TOKEN_ID, TOKEN_PROGRAM_ID, wallet.payer)
 
 const ENV_CONFIG = {
   provider, connection, wallet, program, rewardToken,
@@ -82,7 +60,7 @@ async function getStateSigner () {
 }
 async function getPoolSigner () {
   const [_poolSigner,] = await anchor.web3.PublicKey.findProgramAddress(
-    [FARM_CONFIG.REWARD_TOKEN_ID.toBuffer()],
+    [STAKING_CONFIG.REWARD_TOKEN_ID.toBuffer()],
     program.programId
   );
   return _poolSigner
@@ -103,7 +81,7 @@ const utils = {
 }
 
 module.exports = {
-  FARM_CONFIG,
+  STAKING_CONFIG,
   ENV_CONFIG,
   utils,
 }

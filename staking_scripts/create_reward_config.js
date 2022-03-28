@@ -7,12 +7,25 @@ const { BN, web3, Program, ProgramError, Provider } = anchor
 const { PublicKey, SystemProgram, Keypair, Transaction } = web3
 const { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } = require("@solana/spl-token");
 const utf8 = anchor.utils.bytes.utf8;
-const { ENV_CONFIG, utils, FARM_CONFIG } = require('./CONFIG')
+const { ENV_CONFIG, utils, STAKING_CONFIG } = require('./CONFIG')
 const { program, provider } = ENV_CONFIG
 
 async function main () {
-  const users = await program.account.farmPoolUserAccount.all()
-  console.log(users)
+  const [extraRewardAccount, extraRewardBump] = await anchor.web3.PublicKey.findProgramAddress(
+    [utf8.encode('extra')],
+    program.programId
+  );
+  await program.rpc.createExtraRewardConfigs(extraRewardBump, STAKING_CONFIG.REWARD_CONFIGS,
+  {
+      accounts: {
+        extraRewardAccount: extraRewardAccount,
+        authority: provider.wallet.publicKey,
+        clock: anchor.web3.SYSVAR_CLOCK_PUBKEY,
+        systemProgram: SystemProgram.programId,
+      }
+    })
+  const reward = await program.account.extraRewardsAccount.fetch(extraRewardAccount)
+  console.log(reward)
 }
 
 console.log('Running client.');

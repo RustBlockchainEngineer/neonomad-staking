@@ -34,7 +34,7 @@ let lpPoolBump = 255
 anchor.setProvider(provider);
 
 let creatorKey = provider.wallet.publicKey
-let program = anchor.workspace.WaggleFarm
+let program = anchor.workspace.CropperStaking
 let connection = provider.connection
 
 const cccc = new Connection(connection._rpcEndpoint, { commitment: 'confirmed' })
@@ -66,7 +66,7 @@ const defaultAccounts = {
   systemProgram: SystemProgram.programId,
 }
 
-describe('farm', () => {
+describe('staking', () => {
   it('Is initialized!', async function () {
     rewardMint = await createMint(provider, provider.wallet.publicKey);
     lpMint = await createMint(provider, provider.wallet.publicKey);
@@ -158,20 +158,7 @@ describe('farm', () => {
     assert.ok(new BN(1).eq(extraRewardConfigs.configs[1].duration))
     assert.ok(getNumber(50).eq(extraRewardConfigs.configs[1].extraPercentage))
   })
-  it('Fund to program', async function () {
-    // await rewardMint.mintTo(stateRewardVault, creatorKey, [provider.wallet], getNumber(10000).toString())
-    const tx = program.transaction.fundRewardToken(new BN(10000), {
-      accounts: {
-        pool: poolSigner,
-        state: stateSigner,
-        rewardVault: stateRewardVault,
-        userVault: master.rewardUserVault,
-        authority: master.publicKey,
-        ...defaultAccounts
-      }
-    })
-    await master.provider.send(tx, [], {})
-  })
+  
   it('Create Pool', async function () {
     let pools = await program.account.farmPoolAccount.all()
     await program.rpc.createPool(poolBump, new BN('0'), new BN('0'), {
@@ -224,6 +211,20 @@ describe('farm', () => {
     assert.ok(poolInfo.point.eq(stateInfo.totalPoint))
     assert.ok(poolInfo.point.eq(new BN('0')))
     assert.ok(poolInfo.amountMultipler.eq(new BN(0)))
+  })
+  it('Fund to program', async function () {
+    // await rewardMint.mintTo(stateRewardVault, creatorKey, [provider.wallet], getNumber(10000).toString())
+    const tx = program.transaction.fundRewardToken(new BN(10000), {
+      accounts: {
+        pool: poolSigner,
+        state: stateSigner,
+        rewardVault: stateRewardVault,
+        userVault: master.rewardUserVault,
+        authority: master.publicKey,
+        ...defaultAccounts
+      }
+    })
+    await master.provider.send(tx, [], {})
   })
   it('changePoolAmountMultipler', async function () {
     await program.rpc.changePoolAmountMultipler(new BN(1), {

@@ -7,34 +7,29 @@ const { BN, web3, Program, ProgramError, Provider } = anchor
 const { PublicKey, SystemProgram, Keypair, Transaction } = web3
 const { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } = require("@solana/spl-token");
 const utf8 = anchor.utils.bytes.utf8;
-const { ENV_CONFIG, utils, FARM_CONFIG } = require('./CONFIG')
+const { ENV_CONFIG, utils, STAKING_CONFIG } = require('./CONFIG')
 const { program, provider } = ENV_CONFIG
 
 async function main () {
-  const stateAccount = await utils.getStateAccount()
-  const [poolSigner, poolBump] = await anchor.web3.PublicKey.findProgramAddress(
-    [FARM_CONFIG.REWARD_TOKEN_ID.toBuffer()],
+  const {rewardToken} = ENV_CONFIG
+  const [stateSigner, stateBump] = await anchor.web3.PublicKey.findProgramAddress(
+    [utf8.encode('state')],
     program.programId
   );
-  const poolVault = await ENV_CONFIG.rewardToken.createAccount(poolSigner)
-  let pools = await program.account.farmPoolAccount.all()
-  await program.rpc.createPool(poolBump, FARM_CONFIG.POOL_POINT, FARM_CONFIG.POOL_AMOUNT_MULTIPLIER, {
+  const stateRewardVault = await rewardToken.createAccount(stateSigner)
+  await program.rpc.createState(stateBump, STAKING_CONFIG.FARM_RATE, {
     accounts: {
-      pool: poolSigner,
-      state: stateAccount.publicKey,
-      mint: FARM_CONFIG.REWARD_TOKEN_ID,
-      vault: poolVault,
+      state: stateSigner,
+      rewardMint: rewardToken.publicKey,
+      rewardVault: stateRewardVault,
       authority: provider.wallet.publicKey,
       tokenProgram: TOKEN_PROGRAM_ID,
       clock: anchor.web3.SYSVAR_CLOCK_PUBKEY,
       systemProgram: SystemProgram.programId,
-    },
-    remainingAccounts: pools.map(p => ({
-      pubkey: p.publicKey,
-      isWritable: true,
-      isSigner: false
-    }))
+    }
   })
+  const stateInfo = await program.account.stateAccount.fetch(stateSigner)
+  console.log(stateInfo)
 }
 
 console.log('Running client.');
