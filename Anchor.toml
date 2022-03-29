@@ -8,7 +8,7 @@ cropper_staking = "94fsNRJx5pcXxcmWXW2RR3bHbT7SAmhfdZGxm4GLwC1"
 cropper_staking = "3cjoBZpiEe49TiFcyvPVBTmR5GxiYzpGmw2HyJyszphw"
 
 [programs.mainnet]
-cropper_staking = "2rogd26htJY3BpKhnZnYuqyzQf6SYYGVCy7K7KvRpPAN"
+cropper_staking = "GfXYYi5TFPG5ixdfiXLQacgjZbatqpb9uZZPMTBxMVCx"
 
 [registry]
 url = "https://anchor.projectserum.com"
