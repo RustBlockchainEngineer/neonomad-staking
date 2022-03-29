@@ -15,7 +15,7 @@ url = "https://anchor.projectserum.com"
 
 [provider]
 cluster = "mainnet"
-wallet = "test-keypair.json"
+wallet = "/root/.config/solana/id.json"
 
 [scripts]
 test = "mocha -t 1000000 tests/staking_test.js"
