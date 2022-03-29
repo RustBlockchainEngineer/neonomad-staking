@@ -8,13 +8,13 @@ cropper_staking = "94fsNRJx5pcXxcmWXW2RR3bHbT7SAmhfdZGxm4GLwC1"
 cropper_staking = "3cjoBZpiEe49TiFcyvPVBTmR5GxiYzpGmw2HyJyszphw"
 
 [programs.mainnet]
-cropper_staking = "FBHjXGXUa65hSCzyfMhkcLzu2U3HByNqcWMuDUUHURLa"
+cropper_staking = "2rogd26htJY3BpKhnZnYuqyzQf6SYYGVCy7K7KvRpPAN"
 
 [registry]
 url = "https://anchor.projectserum.com"
 
 [provider]
-cluster = "devnet"
+cluster = "mainnet"
 wallet = "test-keypair.json"
 
 [scripts]

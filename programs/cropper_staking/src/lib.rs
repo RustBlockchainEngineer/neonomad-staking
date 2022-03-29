@@ -4,7 +4,7 @@ use std::convert::TryFrom;
 use std::convert::TryInto;
 use std::mem::size_of;
 
-declare_id!("94fsNRJx5pcXxcmWXW2RR3bHbT7SAmhfdZGxm4GLwC1");
+declare_id!("2rogd26htJY3BpKhnZnYuqyzQf6SYYGVCy7K7KvRpPAN");
 
 const FULL_100: u64 = 100_000_000_000;
 const ACC_PRECISION: u128 = 100_000_000_000;
