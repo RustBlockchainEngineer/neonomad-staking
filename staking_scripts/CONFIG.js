@@ -17,7 +17,7 @@ const provider = new anchor.Provider(connection, wallet, {
 anchor.setProvider(provider);
 // test wallet NNI devnet token account - 8An73xfHatDuRknJ9UPadMAymRpkhQHiV8Safkh71UEx
 const MAIN_POOL_CONFIG = {
-  PROGRAM_ID: new PublicKey('2rogd26htJY3BpKhnZnYuqyzQf6SYYGVCy7K7KvRpPAN'),
+  PROGRAM_ID: new PublicKey('GfXYYi5TFPG5ixdfiXLQacgjZbatqpb9uZZPMTBxMVCx'),
   REWARD_TOKEN_ID: new PublicKey('BcRr96qhSoaKFjGJDKtSWmHDvTrv7ziuq29dRjtUmHuk'),
   FUND_TOKEN_VAULT: new PublicKey('B77SLtFLwAQDMHDLg6JS5k3RmEiJcuhajeF66LZVEy6K'),
   POOL_POINT: new BN('0'),
