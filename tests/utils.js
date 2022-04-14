@@ -8,7 +8,7 @@ const assert = require("assert");
 const utf8 = anchor.utils.bytes.utf8;
 const provider = anchor.Provider.local()
 
-const farmIdl = require('../target/idl/cropper_staking.json');
+const farmIdl = require('../target/idl/neonomad_staking.json');
 
 const { expect } = require('chai');
 const { Connection } = require('@solana/web3.js');

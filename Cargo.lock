@@ -389,7 +389,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "cropper_staking"
+name = "neonomad_staking"
 version = "0.1.0"
 dependencies = [
  "anchor-lang",

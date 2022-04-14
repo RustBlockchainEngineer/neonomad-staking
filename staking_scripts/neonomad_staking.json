@@ -1,6 +1,6 @@
 {
   "version": "0.0.0",
-  "name": "cropper_staking",
+  "name": "neonomad_staking",
   "instructions": [
     {
       "name": "createState",
