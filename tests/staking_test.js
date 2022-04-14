@@ -9,7 +9,7 @@ const { assertError, wrapError } = require("./utils")
 const utf8 = anchor.utils.bytes.utf8;
 const provider = anchor.Provider.local()
 
-const farmIdl = require('../target/idl/cropper_staking.json');
+const farmIdl = require('../target/idl/neonomad_staking.json');
 const { expect } = require('chai');
 const { Connection } = require('@solana/web3.js');
 
@@ -34,7 +34,7 @@ let lpPoolBump = 255
 anchor.setProvider(provider);
 
 let creatorKey = provider.wallet.publicKey
-let program = anchor.workspace.CropperStaking
+let program = anchor.workspace.NeonomadStaking
 let connection = provider.connection
 
 const cccc = new Connection(connection._rpcEndpoint, { commitment: 'confirmed' })

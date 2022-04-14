@@ -1,5 +1,5 @@
 const anchor = require('@project-serum/anchor');
-const idl = require('./cropper_staking.json')
+const idl = require('./neonomad_staking.json')
 const { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } = require("@solana/spl-token");
 const { web3, BN } = anchor
 const { PublicKey, SystemProgram, Keypair, Transaction } = web3

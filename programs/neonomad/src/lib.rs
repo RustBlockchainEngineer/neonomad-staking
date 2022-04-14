@@ -10,7 +10,7 @@ const FULL_100: u64 = 100_000_000_000;
 const ACC_PRECISION: u128 = 100_000_000_000;
 
 #[program]
-pub mod cropper_staking {
+pub mod neonomad_staking {
     use super::*;
 
     pub fn create_state(
