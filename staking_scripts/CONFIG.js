@@ -27,8 +27,8 @@ const MAIN_POOL_CONFIG = {
   REWARD_CONFIGS: [
     { duration: new BN(1 * 30 * 24 * 60 * 60), extraPercentage: getNumber(0) },
     { duration: new BN(3 * 30 * 24 * 60 * 60), extraPercentage: getNumber(10) },
-   // { duration: new BN(6 * 30 * 24 * 60 * 60), extraPercentage: getNumber(30) },
-   // { duration: new BN(365 * 24 * 60 * 60), extraPercentage: getNumber(100) },
+    { duration: new BN(6 * 30 * 24 * 60 * 60), extraPercentage: getNumber(30) },
+    { duration: new BN(365 * 24 * 60 * 60), extraPercentage: getNumber(100) },
   ]
 }
 
